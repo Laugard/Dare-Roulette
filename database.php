@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
 $dbname = "dare_roulette";
-$username = "root";  // XAMPP standardbruger
-$password = "";      // XAMPP standard adgangskode (tom)
+$username = "root";
+$password = "";
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);

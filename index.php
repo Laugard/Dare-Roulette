@@ -1,10 +1,3 @@
-<?php
-require_once 'database.php';
-require_once 'functions.php';
-
-$dare = getRandomDare();
-?>
-
 <!DOCTYPE html>
 <html lang="da">
 <head>
@@ -14,11 +7,25 @@ $dare = getRandomDare();
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>Dare Roulette 🎲</h1>
-<main class="dare-container">
-    <h2><?= htmlspecialchars($dare['title']); ?></h2>
-    <p><?= htmlspecialchars($dare['description']); ?></p>
-    <button onclick="location.reload();">Ny Dare</button>
+<header>
+    <h1>Dare Roulette 🎲</h1>
+</header>
+
+<main>
+    <section class="menu">
+        <h2>Game Modes</h2>
+        <ul>
+            <li><a href="party.php" class="styled-button">Party Mode</a></li>
+            <li><button class="styled-button" disabled>Versus Mode</button></li>
+            <li><button class="styled-button" disabled>Solo Mode</button></li>
+            <li><button class="styled-button" disabled>Leaderboard</button></li>
+            <li><button class="styled-button" disabled>Profile</button></li>
+        </ul>
+    </section>
 </main>
+
+<footer>
+    <small>&copy; 2025 Dare Roulette</small>
+</footer>
 </body>
 </html>
