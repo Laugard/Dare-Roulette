@@ -2,24 +2,20 @@
 <html lang="da">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dare Roulette</title>
+    <title>Welcome to Dare Roulette</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header>
-    <h1>Dare Roulette 🎲</h1>
+    <h1>Welcome to Dare Roulette 🎲</h1>
 </header>
 
 <main>
     <section class="menu">
-        <h2>Game Modes</h2>
+        <h2>Please choose an option:</h2>
         <ul>
-            <li><a href="party.php" class="styled-button">Party Mode</a></li>
-            <li><button class="styled-button" disabled>Versus Mode</button></li>
-            <li><button class="styled-button" disabled>Solo Mode</button></li>
-            <li><button class="styled-button" disabled>Leaderboard</button></li>
-            <li><button class="styled-button" disabled>Profile</button></li>
+            <li><a href="login.php" class="styled-button">Login</a></li>
+            <li><a href="register.php" class="styled-button">Register</a></li>
         </ul>
     </section>
 </main>
