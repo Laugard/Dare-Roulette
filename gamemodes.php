@@ -12,20 +12,20 @@
 </header>
 
 <main>
-    <section class="menu">
+    <nav aria-label="Game Modes" class="menu">
         <h2>Game Modes</h2>
         <ul>
-            <li><a href="party.php" class="styled-button">Party Mode</a></li>
-            <li><button class="styled-button" disabled>Versus Mode</button></li>
-            <li><button class="styled-button" disabled>Solo Mode</button></li>
-            <li><button class="styled-button" disabled>Leaderboard</button></li>
-            <li><a href="profile.php" class="styled-button">Profile</a></li>
+            <li><a href="modes/party/party.php" class="styled-button">Party Mode</a></li>
+            <li><a href="modes/versus.php" class="styled-button">Versus Mode</a></li>
+            <li><a href="modes/solo.php" class="styled-button">Solo Mode</a></li>
+            <li><a href="pages/leaderboard.php" class="styled-button">Leaderboard</a></li>
+            <li><a href="pages/profile.php" class="styled-button">Profile</a></li>
         </ul>
-    </section>
+    </nav>
 </main>
 
 <footer>
-    <small>&copy; 2025 Dare Roulette</small>
+    <p><small>&copy; 2025 Dare Roulette</small></p>
 </footer>
 </body>
 </html>

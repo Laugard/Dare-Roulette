@@ -1,6 +1,9 @@
 <?php
 session_start();
-require 'database.php'; // Assuming db.php contains the database connection
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/functions.php';
+
+global $pdo;
 
 // Check if the user is logged in, if not redirect to login page
 if (!isset($_SESSION['user_id'])) {
@@ -36,9 +39,13 @@ $daredevilTitles = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Profile - Dare Roulette</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+<nav class="top-nav">
+    <a href="../gamemodes.php">🎮 Game Modes</a>
+    <a href="profile.php">👤 Profil</a>
+</nav>
 <header>
     <h1>Your Profile 🎲</h1>
 </header>
@@ -69,8 +76,8 @@ $daredevilTitles = [
             </div>
         </div>
 
-        <a href="index.php" class="styled-button">Logout</a>
-        <a href="gamemodes.php" class="styled-button">Back</a>
+        <a href="../index.php" class="styled-button">Logout</a>
+        <a href="../gamemodes.php" class="styled-button">Back</a>
 
     </section>
 </main>

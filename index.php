@@ -14,8 +14,8 @@
     <section class="menu">
         <h2>Please choose an option:</h2>
         <ul>
-            <li><a href="login.php" class="styled-button">Login</a></li>
-            <li><a href="register.php" class="styled-button">Register</a></li>
+            <li><a href="auth/login.php" class="styled-button">Login</a></li>
+            <li><a href="auth/register.php" class="styled-button">Register</a></li>
         </ul>
     </section>
 </main>
