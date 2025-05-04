@@ -10,7 +10,13 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $controller = new GameController($pdo);
-extract($controller->handle($_SESSION['user_id'], 'Solo'));
+$data = $controller->handle($_SESSION['user_id'], 'Solo');
+
+// PHP 5-kompatibel fallback
+$dare = isset($data['dare']) ? $data['dare'] : array('title' => '', 'description' => '', 'xp_reward' => 0);
+$level = isset($data['level']) ? $data['level'] : 1;
+$xpThisLevel = isset($data['xpThisLevel']) ? $data['xpThisLevel'] : 0;
+$progressPercent = isset($data['progressPercent']) ? $data['progressPercent'] : 0;
 ?>
 
 <!DOCTYPE html>
@@ -20,90 +26,50 @@ extract($controller->handle($_SESSION['user_id'], 'Solo'));
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solo Mode</title>
     <link rel="stylesheet" href="../../public/assets/styles.css">
-    <style>
-        .xp-bar-container {
-            width: 100%;
-            max-width: 400px;
-            background: #ddd;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-top: 10px;
-            height: 25px;
-            position: relative;
-        }
-
-        .xp-bar {
-            height: 100%;
-            background: linear-gradient(to right, #4caf50, #81c784);
-            width: <?= $progressPercent ?>%;
-            transition: width 0.3s ease-in-out;
-            border-radius: 20px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
-        .xp-text-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .xp-text {
-            font-weight: bold;
-            color: black;
-            font-size: 14px;
-        }
-    </style>
 </head>
 <body>
 
-<nav class="top-nav">
+<nav class="top-nav" aria-label="Primær navigation">
     <a href="../gamemodes.php">🎮 Game Modes</a>
     <a href="../profile.php">👤 Profil</a>
 </nav>
+
 <header>
     <h1>Solo Mode 💪</h1>
 </header>
 
 <main>
-    <section class="solo-dare">
-        <h2><?= htmlspecialchars($dare['title']); ?></h2>
-        <p><?= htmlspecialchars($dare['description']); ?></p>
+    <section class="dare" aria-labelledby="dare-title">
+        <h2 id="dare-title"><?= htmlspecialchars($dare['title']) ?></h2>
+        <p><?= htmlspecialchars($dare['description']) ?></p>
         <p><strong>XP for denne dare:</strong> <?= htmlspecialchars($dare['xp_reward']) ?> XP</p>
 
         <form method="post">
-            <input type="hidden" name="xp" value="<?= (int)$dare['xp_reward'] ?>">
+            <input type="hidden" name="xp" value="<?= (int) $dare['xp_reward'] ?>">
             <button type="submit" name="completed" class="styled-button">Dare klaret!</button>
         </form>
 
         <hr>
 
-        <h3>🧠 XP</h3>
-        <p><strong>Level:</strong> <?= $level ?></p>
+        <section aria-labelledby="xp-title">
+            <h3 id="xp-title">🧠 XP</h3>
+            <p><strong>Level:</strong> <?= (int) $level ?></p>
 
-        <div style="display: flex; justify-content: center;">
-            <div class="xp-bar-container">
-                <div class="xp-bar"></div>
-                <div class="xp-text-wrapper">
-                    <span class="xp-text"><?= $xpThisLevel ?>/100 XP</span>
+            <div class="xp-wrapper">
+                <div class="xp-bar-container">
+                    <div class="xp-bar" style="width: <?= (float) $progressPercent ?>%;"></div>
+                    <div class="xp-text-wrapper">
+                        <span class="xp-text"><?= (int) $xpThisLevel ?>/100 XP</span>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        </section>
     </section>
 </main>
 
 <footer>
     <small>&copy; 2025 Dare Roulette</small>
 </footer>
+
 </body>
 </html>

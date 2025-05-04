@@ -254,3 +254,49 @@ input::placeholder {
     transform: scale(1.1);
     color: #ffe;
 }
+/* === XP BAR === */
+.xp-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.xp-bar-container {
+    width: 100%;
+    max-width: 400px;
+    background: #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 25px;
+    position: relative;
+}
+
+.xp-bar {
+    height: 100%;
+    background: linear-gradient(to right, #4caf50, #81c784);
+    transition: width 0.3s ease-in-out;
+    border-radius: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.xp-text-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.xp-text {
+    font-weight: bold;
+    color: black;
+    font-size: 14px;
+}

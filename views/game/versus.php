@@ -49,53 +49,69 @@ if (!in_array($userId, [$match['player1_id'], $match['player2_id']])) {
     <link rel="stylesheet" href="../../public/assets/styles.css">
 </head>
 <body>
-<nav class="top-nav">
+
+<nav class="top-nav" aria-label="Primær navigation">
     <a href="../gamemodes.php">🎮 Game Modes</a>
     <a href="../profile.php">👤 Profil</a>
 </nav>
 
-<h1>Versus Mode ⚔️</h1>
+<header>
+    <h1>Versus Mode ⚔️</h1>
+</header>
 
-<?php if ($match['status'] === 'waiting'): ?>
-    <p>⏳ Venter på en modstander...</p>
-    <script>
-        setInterval(() => {
-            fetch("versus.php?ajax=check_winner&match_id=<?= $match['id'] ?>")
-                .then(res => res.json())
-                .then(data => {
-                    if (data.status === 'active') {
-                        location.reload();
-                    }
-                });
-        }, 2000);
-    </script>
+<main>
+    <?php if ($match['status'] === 'waiting'): ?>
+        <section aria-live="polite">
+            <p>⏳ Venter på en modstander...</p>
+            <script>
+                setInterval(() => {
+                    fetch("versus.php?ajax=check_winner&match_id=<?= $match['id'] ?>")
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'active') {
+                                location.reload();
+                            }
+                        });
+                }, 2000);
+            </script>
+        </section>
 
-<?php elseif ($match['status'] === 'completed'): ?>
-    <h2>Vinderen er: <?= $match['winner_id'] == $userId ? 'DIG! 🎉' : 'Modstanderen 😔' ?></h2>
-    <a href="versus.php?action=reset" class="styled-button">Spil igen</a>
+    <?php elseif ($match['status'] === 'completed'): ?>
+        <section>
+            <h2>Vinderen er: <?= $match['winner_id'] == $userId ? 'DIG! 🎉' : 'Modstanderen 😔' ?></h2>
+            <a href="versus.php?action=reset" class="styled-button">Spil igen</a>
+        </section>
 
-<?php else: ?>
-    <p><strong>Dare:</strong> <?= htmlspecialchars($match['title']) ?></p>
-    <p><?= htmlspecialchars($match['description']) ?></p>
+    <?php else: ?>
+        <section>
+            <h2>Dagens Dare</h2>
+            <p><strong><?= htmlspecialchars($match['title']) ?></strong></p>
+            <p><?= htmlspecialchars($match['description']) ?></p>
 
-    <form method="post">
-        <input type="hidden" name="match_id" value="<?= $match['id'] ?>">
-        <button type="submit" class="styled-button">Dare klaret!</button>
-    </form>
+            <form method="post">
+                <input type="hidden" name="match_id" value="<?= $match['id'] ?>">
+                <button type="submit" class="styled-button">Dare klaret!</button>
+            </form>
 
-    <script>
-        setInterval(() => {
-            fetch("versus.php?ajax=check_winner&match_id=<?= $match['id'] ?>")
-                .then(res => res.json())
-                .then(data => {
-                    if (data.status === 'completed') {
-                        location.reload();
-                    }
-                });
-        }, 2000);
-    </script>
-<?php endif; ?>
+            <script>
+                setInterval(() => {
+                    fetch("versus.php?ajax=check_winner&match_id=<?= $match['id'] ?>")
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'completed') {
+                                location.reload();
+                            }
+                        });
+                }, 2000);
+            </script>
+        </section>
+    <?php endif; ?>
 
-<a href="../gamemodes.php" class="styled-button">🔙 Tilbage</a>
+    <nav aria-label="Sekundær navigation">
+        <a href="../gamemodes.php" class="styled-button">🔙 Tilbage</a>
+    </nav>
+</main>
+
 </body>
 </html>
+

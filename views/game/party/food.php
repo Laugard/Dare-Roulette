@@ -1,14 +1,13 @@
 <?php
 // Vis fejl i browseren
+global $pdo;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Hent nødvendige filer
 require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../../controllers/GameController.php';
 
-// Initialisér controller og hent dare
 $controller = new GameController($pdo);
 $rotation = isset($_GET['rotation']) ? floatval($_GET['rotation']) : 0;
 $dare = $controller->getRandomByCategoryDare('Food');
@@ -27,26 +26,30 @@ $dare = $controller->getRandomByCategoryDare('Food');
 </header>
 
 <main>
-    <section aria-label="Roulettehjul" style="position: relative; display: inline-block;">
-        <div id="pointer" aria-hidden="true"></div>
-        <canvas id="wheel" width="300" height="300" role="img" aria-label="Roulettehjul"></canvas>
+    <section aria-labelledby="wheel-heading">
+        <h2 id="wheel-heading" class="visually-hidden">Roulettehjul</h2>
+        <figure>
+            <div id="pointer" aria-hidden="true"></div>
+            <canvas id="wheel" width="300" height="300" role="img" aria-label="Roulettehjul med 6 felter"></canvas>
+            <figcaption class="visually-hidden">Viser roulettehjulet med ukendte udfordringer.</figcaption>
+        </figure>
     </section>
 
-    <section>
+    <section aria-label="Spin knap">
         <button id="spinButton" type="button">🎯 Spin hjulet</button>
     </section>
 
     <?php if ($dare): ?>
-        <section class="dare" id="dareSection">
+        <section class="dare" aria-labelledby="dare-title">
             <article>
-                <h2><?= htmlspecialchars($dare['title']); ?></h2>
+                <h2 id="dare-title"><?= htmlspecialchars($dare['title']); ?></h2>
                 <p><?= htmlspecialchars($dare['description']); ?></p>
             </article>
         </section>
     <?php endif; ?>
 
-    <nav>
-        <a href="party.php" class="styled-button" style="margin-top: 20px;">🔙 Tilbage</a>
+    <nav aria-label="Navigation">
+        <a href="party.php" class="styled-button">🔙 Tilbage</a>
     </nav>
 </main>
 
