@@ -1,22 +1,29 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../config/functions.php';
+// Vis fejl i browseren
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+// Hent nødvendige filer
+require_once __DIR__ . '/../../../config/database.php';
+require_once __DIR__ . '/../../../controllers/GameController.php';
 
+// Initialisér controller og hent dare
+$controller = new GameController($pdo);
 $rotation = isset($_GET['rotation']) ? floatval($_GET['rotation']) : 0;
-$dare = getRandomDareByCategory('Music');
+$dare = $controller->getRandomByCategoryDare('Food');
 ?>
 <!DOCTYPE html>
 <html lang="da">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Dare Roulette</title>
-    <link rel="stylesheet" href="../../styles.css">
+    <title>Food Dare Roulette</title>
+    <link rel="stylesheet" href="../../../public/assets/styles.css">
 </head>
 <body>
 <header>
-    <h1>🎲 Music Dare Roulette</h1>
+    <h1>🎲 Food Dare Roulette</h1>
 </header>
 
 <main>

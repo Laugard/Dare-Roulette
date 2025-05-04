@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome to Dare Roulette</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
 <header>
@@ -14,8 +14,8 @@
     <section class="menu">
         <h2>Please choose an option:</h2>
         <ul>
-            <li><a href="auth/login.php" class="styled-button">Login</a></li>
-            <li><a href="auth/register.php" class="styled-button">Register</a></li>
+            <li><a href="../views/auth/login.php" class="styled-button">Login</a></li>
+            <li><a href="../views/auth/register.php" class="styled-button">Register</a></li>
         </ul>
     </section>
 </main>

@@ -1,11 +1,10 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../config/functions.php';
-
 global $pdo;
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../controllers/UserController.php';
 
-$stmt = $pdo->query("SELECT username, level, xp FROM users ORDER BY level DESC, xp DESC LIMIT 100");
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$controller = new UserController($pdo);
+$users = $controller->getLeaderboard();
 ?>
 
 <!DOCTYPE html>
@@ -14,11 +13,8 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard - Dare Roulette</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../public/assets/styles.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
         .leaderboard {
             max-width: 600px;
             margin: 0 auto;
@@ -51,7 +47,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 <nav class="top-nav">
-    <a href="../gamemodes.php">🎮 Game Modes</a>
+    <a href="gamemodes.php">🎮 Game Modes</a>
     <a href="profile.php">👤 Profil</a>
 </nav>
 <header>
@@ -77,7 +73,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tr>
             <?php endforeach; ?>
         </table>
-        <a href="../gamemodes.php" class="styled-button" style="margin-top: 20px;">🔙 Tilbage</a>
+        <a href="gamemodes.php" class="styled-button" style="margin-top: 20px;">🔙 Tilbage</a>
     </section>
 </main>
 

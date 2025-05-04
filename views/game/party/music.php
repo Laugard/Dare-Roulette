@@ -1,49 +1,60 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../config/functions.php';
+// Vis fejl i browseren
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+// Hent funktioner og DB
+require_once __DIR__ . '/../../../config/database.php';
+require_once __DIR__ . '/../../../controllers/GameController.php';
+
+// Hent dare fra kategorien
 $rotation = isset($_GET['rotation']) ? floatval($_GET['rotation']) : 0;
-$dare = getRandomDare(); // Tag bare en tilfældig dare uanset hvad
+$dare = getRandomDareByCategory('Music');
 ?>
-
 <!DOCTYPE html>
 <html lang="da">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dare Roulette</title>
-    <link rel="stylesheet" href="../../styles.css">
+    <title>Music Dare Roulette</title>
+    <link rel="stylesheet" href="../../../public/assets/styles.css">
 </head>
 <body>
 <header>
-    <h1>Dare Roulette 🎲</h1>
+    <h1>🎲 Music Dare Roulette</h1>
 </header>
 
 <main>
-    <section style="position: relative; display: inline-block;">
-        <div id="pointer"></div>
-        <canvas id="wheel" width="300" height="300"></canvas>
+    <section aria-label="Roulettehjul" style="position: relative; display: inline-block;">
+        <div id="pointer" aria-hidden="true"></div>
+        <canvas id="wheel" width="300" height="300" role="img" aria-label="Roulettehjul"></canvas>
     </section>
-    <br>
-    <button id="spinButton">Spin hjulet</button>
 
-    <section class="dare" id="dareSection" style="<?= $dare ? '' : 'display:none;' ?>">
-        <?php if ($dare): ?>
-            <h2><?= htmlspecialchars($dare['title']); ?></h2>
-            <p><?= htmlspecialchars($dare['description']); ?></p>
-        <?php endif; ?>
+    <section>
+        <button id="spinButton" type="button">🎯 Spin hjulet</button>
     </section>
+
+    <?php if ($dare): ?>
+        <section class="dare" id="dareSection">
+            <article>
+                <h2><?= htmlspecialchars($dare['title']); ?></h2>
+                <p><?= htmlspecialchars($dare['description']); ?></p>
+            </article>
+        </section>
+    <?php endif; ?>
+
     <nav>
         <a href="party.php" class="styled-button" style="margin-top: 20px;">🔙 Tilbage</a>
     </nav>
 </main>
 
 <footer>
-    <small>&copy; 2025 Dare Roulette</small>
+    <p><small>&copy; 2025 Dare Roulette</small></p>
 </footer>
 
 <script>
-    const slices = 6; // Antal felter – kan ændres
+    const slices = 6;
     const labels = Array(slices).fill("???");
     const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#8E44AD', '#27AE60', '#E67E22'];
     let spinning = false;
@@ -100,7 +111,7 @@ $dare = getRandomDare(); // Tag bare en tilfældig dare uanset hvad
         function animate(now) {
             const elapsed = now - start;
             const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3); // ease out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
             rotation = eased * totalRotation;
             drawWheel(rotation);
 

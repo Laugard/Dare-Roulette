@@ -1,48 +1,16 @@
 <?php
+global $pdo;
 session_start();
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../config/functions.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../controllers/GameController.php';
 
 if (!isset($_SESSION['user_id'])) {
-    die("Du skal være logget ind for at bruge Solo Mode.");
-}
-
-global $pdo;
-$userId = $_SESSION['user_id'];
-
-// Når man klikker "Dare klaret!"
-if (isset($_POST['completed'])) {
-    $xpToAdd = (int)$_POST['xp'];
-
-    $stmt = $pdo->prepare("UPDATE users SET xp = xp + ? WHERE id = ?");
-    $stmt->execute([$xpToAdd, $userId]);
-
-    header("Location: solo.php");
+    header("Location: ../auth/login.php");
     exit();
 }
 
-// Hent dare
-$dare = getRandomDareByCategory('Solo');
-
-// Hent brugerens xp og level
-$stmt = $pdo->prepare("SELECT xp, level FROM users WHERE id = ?");
-$stmt->execute([$userId]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$totalXP = $user['xp'];
-$currentLevel = $user['level'];
-
-// Genberegn korrekt level
-$calculatedLevel = floor($totalXP / 100) + 1;
-if ($calculatedLevel > $currentLevel) {
-    $stmt = $pdo->prepare("UPDATE users SET level = ? WHERE id = ?");
-    $stmt->execute([$calculatedLevel, $userId]);
-    $currentLevel = $calculatedLevel;
-}
-
-// XP status for progress bar
-$xpThisLevel = $totalXP % 100;
-$progressPercent = min(100, ($xpThisLevel / 100) * 100);
+$controller = new GameController($pdo);
+extract($controller->handle($_SESSION['user_id'], 'Solo'));
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +19,7 @@ $progressPercent = min(100, ($xpThisLevel / 100) * 100);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solo Mode</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../../public/assets/styles.css">
     <style>
         .xp-bar-container {
             width: 100%;
@@ -100,13 +68,11 @@ $progressPercent = min(100, ($xpThisLevel / 100) * 100);
 
 <nav class="top-nav">
     <a href="../gamemodes.php">🎮 Game Modes</a>
-    <a href="../pages/profile.php">👤 Profil</a>
+    <a href="../profile.php">👤 Profil</a>
 </nav>
 <header>
     <h1>Solo Mode 💪</h1>
 </header>
-
-
 
 <main>
     <section class="solo-dare">
@@ -122,7 +88,7 @@ $progressPercent = min(100, ($xpThisLevel / 100) * 100);
         <hr>
 
         <h3>🧠 XP</h3>
-        <p><strong>Level:</strong> <?= $currentLevel ?></p>
+        <p><strong>Level:</strong> <?= $level ?></p>
 
         <div style="display: flex; justify-content: center;">
             <div class="xp-bar-container">

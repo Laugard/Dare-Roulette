@@ -1,7 +1,14 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../config/functions.php';
+// Vis fejl i browseren
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+// Hent funktioner og DB
+require_once __DIR__ . '/../../../config/database.php';
+require_once __DIR__ . '/../../../controllers/GameController.php';
+
+// Hent dare fra kategorien
 $rotation = isset($_GET['rotation']) ? floatval($_GET['rotation']) : 0;
 $dare = getRandomDareByCategory('Public');
 ?>
@@ -11,7 +18,7 @@ $dare = getRandomDareByCategory('Public');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Public Dare Roulette</title>
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../../public/assets/styles.css">
 </head>
 <body>
 <header>

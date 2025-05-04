@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Party Mode</title>
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../../public/assets/styles.css">
 </head>
 <body>
 <nav class="top-nav">
     <a href="../../gamemodes.php">🎮 Game Modes</a>
-    <a href="../../pages/profile.php">👤 Profil</a>
+    <a href="../../profile.php">👤 Profil</a>
 </nav>
 <header>
     <h1>Party Mode</h1>

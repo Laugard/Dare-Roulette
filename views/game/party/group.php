@@ -1,8 +1,14 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../config/functions.php';
+// Vis fejl i browseren
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+// Hent funktioner og DB
+require_once __DIR__ . '/../../../config/database.php';
+require_once __DIR__ . '/../../../controllers/GameController.php';
 
+// Hent dare fra kategorien
 $rotation = isset($_GET['rotation']) ? floatval($_GET['rotation']) : 0;
 $dare = getRandomDareByCategory('Group');
 ?>
@@ -12,7 +18,7 @@ $dare = getRandomDareByCategory('Group');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group Dare Roulette</title>
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../../public/assets/styles.css">
 </head>
 <body>
 <header>
@@ -20,17 +26,17 @@ $dare = getRandomDareByCategory('Group');
 </header>
 
 <main>
-    <section class="wheel-container" aria-label="Roulettehjul">
+    <section aria-label="Roulettehjul" style="position: relative; display: inline-block;">
         <div id="pointer" aria-hidden="true"></div>
         <canvas id="wheel" width="300" height="300" role="img" aria-label="Roulettehjul"></canvas>
     </section>
 
-    <section class="controls">
+    <section>
         <button id="spinButton" type="button">🎯 Spin hjulet</button>
     </section>
 
     <?php if ($dare): ?>
-        <section class="dare" id="dareSection" aria-live="polite">
+        <section class="dare" id="dareSection">
             <article>
                 <h2><?= htmlspecialchars($dare['title']); ?></h2>
                 <p><?= htmlspecialchars($dare['description']); ?></p>
@@ -38,9 +44,9 @@ $dare = getRandomDareByCategory('Group');
         </section>
     <?php endif; ?>
 
-    <div class="back-link">
-        <a href="party.php" class="styled-button back-button">🔙 Tilbage</a>
-    </div>
+    <nav>
+        <a href="party.php" class="styled-button" style="margin-top: 20px;">🔙 Tilbage</a>
+    </nav>
 </main>
 
 <footer>
